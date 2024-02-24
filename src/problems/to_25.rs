@@ -629,3 +629,32 @@ pub fn problem_15() {
     );
 }
 
+// What is the sum of the digits of the number 2^1000
+#[allow(dead_code)]
+#[named]
+pub fn problem_16() {
+    let start = Instant::now();
+    let mut answer:u32 = 0;
+
+    let two:BigUint = BigUint::from(2u32);
+    let power = two.pow(1000u32);
+    let digits = power.to_string();
+
+    let chars:Vec<char> = digits.chars().rev().collect();
+    for c in chars {
+        let digit = c.to_digit(10).unwrap();
+        answer += digit;
+    }
+
+    let duration = start.elapsed();
+    println!(
+        " {} answer: {} duration: {:.2?}",
+        function_name!(),
+        answer,
+        duration
+    );
+}
+
+
+
+

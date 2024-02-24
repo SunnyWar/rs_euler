@@ -163,7 +163,7 @@ pub fn num_divisors(n: i32) -> i32 {
     divisors
 }
 
-pub fn get_char(s: &str, n: usize) -> char {
+pub fn get_first_char(s: &str, n: usize) -> char {
     let a:Vec<char> = s.chars().collect();
 
     if a.len() == 0 || n >= a.len() {
