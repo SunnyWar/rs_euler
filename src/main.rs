@@ -24,7 +24,7 @@ fn main() {
                 14 => problem_14(),
                 15 => problem_15(),
                 16 => problem_16(),
-                //17 => problem_17(),
+                17 => problem_17(),
                 _ => println!("No problem associated with this number."),
             },
             Err(_) => println!("Please provide a valid number."),

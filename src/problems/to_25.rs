@@ -655,12 +655,18 @@ pub fn problem_16() {
     );
 }
 
+// If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
 #[allow(dead_code)]
 #[named]
 pub fn problem_17() {
     let start = Instant::now();
-    let mut answer:u32 = 0;
+    let mut answer = 0;
 
+    for num in 1..=1000 {
+        let num_word = helpers::number_to_words(num);
+        let count = helpers::count_only_letters(&num_word);
+        answer += count;
+    }
 
     let duration = start.elapsed();
     println!(

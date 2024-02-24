@@ -205,3 +205,46 @@ pub fn collatz_length(n: u64) -> u32 {
 
     result
 }
+
+// converts a number (up to 9999) into words
+pub fn number_to_words(n: u32) -> String {
+    let units = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    let teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    let tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+    let thousands = n / 1000;
+    let hundreds = (n % 1000) / 100;
+    let remainder = n % 100;
+    let mut result = String::new();
+
+    if thousands > 0 {
+        result.push_str(units[thousands as usize]);
+        result.push_str(" thousand ");
+    }
+
+    if hundreds > 0 {
+        result.push_str(units[hundreds as usize]);
+        result.push_str(" hundred ");
+    }
+
+    if remainder > 0 {
+        if !result.is_empty() {
+            result.push_str("and ");
+        }
+
+        if remainder < 20 {
+            result.push_str(if remainder < 10 { units[remainder as usize] } else { teens[(remainder % 10) as usize] });
+        } else {
+            result.push_str(tens[(remainder / 10) as usize]);
+            if remainder % 10 > 0 {
+                result.push_str("-");
+                result.push_str(units[(remainder % 10) as usize]);
+            }
+        }
+    }
+
+    result
+}
+
+pub fn count_only_letters(s: &str) -> usize {
+    s.chars().filter(|c| c.is_alphabetic()).count()
+}
