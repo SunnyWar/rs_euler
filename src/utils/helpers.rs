@@ -1,4 +1,7 @@
 use std::vec;
+use std::collections::HashSet;
+use num_bigint::BigUint;
+use num_traits::Zero;
 
 const PRIMES: [u64; 168] = [
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
@@ -59,13 +62,22 @@ pub fn is_palindrome(n: i32) -> bool {
     original == reversed
 }
 
-pub fn generate_combinations_of_three(max_value: i32) -> impl Iterator<Item = (u32, u32, u32)> {
-    (0..max_value)
-        .flat_map(move |i| (0..max_value)
-        .flat_map(move |j| (0..max_value)
-        .map(move |k| (i as u32, j as u32, k as u32))))
-}
-
+/// Generates a list of prime numbers up to a given limit using the Sieve of Eratosthenes algorithm.
+///
+/// # Arguments
+///
+/// * `limit` - A u64 that defines the upper limit of the range to search for prime numbers.
+///
+/// # Returns
+///
+/// * `Vec<u64>` - A vector of u64 where each element is a prime number.
+///
+/// # Example
+///
+/// ```
+/// let primes = sieve_of_eratosthenes(10);
+/// assert_eq!(primes, vec![2, 3, 5, 7]);
+/// ```
 pub fn sieve_of_eratosthenes(limit: u64) -> Vec<u64> {
     let sieve = sieve(limit as usize);
     let mut primes = Vec::new();
@@ -114,4 +126,82 @@ fn sieve(n: usize) -> Vec<bool>{
     }
 
     return sieve_array;
+}
+
+pub fn triangle_number(n: i32) -> i32 {
+    n * (n + 1) / 2
+}
+
+pub fn prime_factorization(n: i32) -> HashSet<i32> {
+    let mut factors = HashSet::new();
+    let mut n = n;
+
+    for i in 2..=n {
+        while n % i == 0 {
+            factors.insert(i);
+            n /= i;
+        }
+    }
+
+    factors
+}
+pub fn num_divisors(n: i32) -> i32 {
+    let mut divisors = 0;
+    let boundary = (n as f64).sqrt() as i32;
+
+    for i in 1..=boundary {
+        if n % i == 0 {
+            divisors += 1;
+            if i != (n / i) {
+                if i * i != n {
+                    divisors += 1;
+                }
+            }
+        }
+    }
+
+    divisors
+}
+
+pub fn get_char(s: &str, n: usize) -> char {
+    let a:Vec<char> = s.chars().collect();
+
+    if a.len() == 0 || n >= a.len() {
+        return '\0';
+    }
+
+    let b:char = a[n];
+    b
+}
+
+pub fn get_char_from_back(s: &str, n: usize) -> char {
+    let a:Vec<char> = s.chars().rev().collect();
+
+    if a.len() == 0 || n >= a.len() {
+        return '\0';
+    }
+
+    let b:char = a[n];
+    b
+}
+
+pub fn string_to_biguint(s: &str) -> BigUint {
+    let mut result = Zero::zero();
+    for c in s.chars() {
+        let digit = c.to_digit(10).unwrap();
+        result = result * BigUint::from(10u32) + BigUint::from(digit);
+    }
+    result
+}
+
+pub fn collatz_length(n: u64) -> u32 {
+    let mut result = 1;
+    let mut x = n;
+
+    while x != 1 {
+        x = if x % 2 == 0 { x / 2 } else { 3 * x + 1 };
+        result += 1;
+    }
+
+    result
 }
