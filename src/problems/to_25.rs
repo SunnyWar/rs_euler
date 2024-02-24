@@ -655,6 +655,25 @@ pub fn problem_16() {
     );
 }
 
+#[allow(dead_code)]
+#[named]
+pub fn problem_17() {
+    let start = Instant::now();
+    let mut answer:u32 = 0;
+
+
+    let duration = start.elapsed();
+    println!(
+        " {} answer: {} duration: {:.2?}",
+        function_name!(),
+        answer,
+        duration
+    );
+}
+
+
+
+
 
 
 
